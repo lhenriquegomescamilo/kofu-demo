@@ -28,5 +28,10 @@ class UserRepostiory(private val client: DatabaseClient) {
     suspend fun deleteAll() = client.execute("DELETE FROM users").await()
     fun findAll() = client.select().from("users").asType<UserModel>().fetch().flow()
 
+    suspend fun findByLogin(login: String) = client.execute("SELECT * FROM users WHERE login = :login")
+        .bind("login", login)
+        .asType<UserModel>().fetch()
+        .awaitOne()
+
 
 }

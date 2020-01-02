@@ -4,4 +4,5 @@ import org.springframework.web.reactive.function.server.coRouter
 
 fun userRouter(userHandler: UserHandler) = coRouter {
     GET("/api/user",  userHandler::listAll)
+    GET("/api/user/{login}") { userHandler.finByLogin(it)}
 }
